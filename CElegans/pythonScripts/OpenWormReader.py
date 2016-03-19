@@ -27,8 +27,8 @@ class OpenWormReader:
         conns = []
         cells = []
         for s in self.neuron_connections:
-            pre = str(s.pre_cell())
-            post = str(s.post_cell())
+            pre = str(s.pre_cell().name())
+            post = str(s.post_cell().name())
             syntype = str(s.syntype())
             num = int(s.number())
             synclass = str(s.synclass())
@@ -58,8 +58,8 @@ class OpenWormReader:
         neurons = []
         muscles = []
         for s in self.muscle_connections:
-            pre = str(s.pre_cell())
-            post = str(s.post_cell())
+            pre = str(s.pre_cell().name())
+            post = str(s.post_cell().name())
             syntype = str(s.syntype())
             num = int(s.number())
             synclass = str(s.synclass())
