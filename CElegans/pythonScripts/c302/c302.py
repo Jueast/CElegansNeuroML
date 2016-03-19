@@ -43,7 +43,8 @@ except:
 
 import sys
 sys.path.append("..")
-import SpreadsheetDataReader
+# import SpreadsheetDataReader
+from OpenWormReader import OpenWormReader
 
 LEMS_TEMPLATE_FILE = "LEMS_c302_TEMPLATE.xml"
 
@@ -282,7 +283,7 @@ def generate(net_id,
              test=False,
              verbose=True,
              target_directory='./'):
-                
+
 
     params.create_models()
     
@@ -326,13 +327,9 @@ def generate(net_id,
 
     nml_doc.pulse_generators.append(params.offset_current)
 
-    # Use the spreadsheet reader to give a list of all cells and a list of all connections
-    # This could be replaced with a call to "DatabaseReader" or "OpenWormNeuroLexReader" in future...
-    # If called from unittest folder ammend path to "../../../../"
-    spreadsheet_location = "../../../../" if test else "../../../"
-
-    cell_names, conns = SpreadsheetDataReader.readDataFromSpreadsheet(spreadsheet_location, include_nonconnected_cells=True)
-
+#   Using "OpenWormReader" now 
+    owr = OpenWormReader()
+    cell_names, conns = owr.read(include_nonconnected_cells=True)
     cell_names.sort()
 
     # To hold all Cell NeuroML objects vs. names
@@ -484,7 +481,8 @@ def generate(net_id,
     if verbose: 
         print("Finished loading %i cells"%count)
 
-    mneurons, all_muscles, muscle_conns = SpreadsheetDataReader.readMuscleDataFromSpreadsheet(spreadsheet_location)
+    mneurons, all_muscles, muscle_conns = owr.readMuscleData()
+    owr.finish()
 
     muscles = get_muscle_names()
 

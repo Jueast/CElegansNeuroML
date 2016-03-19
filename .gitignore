@@ -30,6 +30,7 @@
 *~
 *.pyc
 *py.class
+*#
 
 generatedMOOSE
 CElegans/pythonScripts/*.mod
